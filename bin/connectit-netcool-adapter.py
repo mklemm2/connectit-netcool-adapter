@@ -222,8 +222,10 @@ class ConnectitDaemon(Daemon):
 			queue_map=netcool_queue_map
 		)
 
-		watch_new_event = Watch(watchlist_map)
-		unwatch_event = Unwatch(watchlist_map)
+		watchers={}
+
+		watch_new_event = Watch(watchlist_map, watchers, netcool_queue_map)
+		unwatch_event = Unwatch(watchlist_map, watchers)
 
 		triggers= [
 			FastTrigger(new_event_schema, [watch_new_event]),
@@ -286,8 +288,6 @@ class ConnectitDaemon(Daemon):
 		logger.info("Starting REST service at {url}".format(
 			url=urlunparse(baseurl)))
 		for proc in netcool_syncer:
-			proc.start()
-		for proc in no_issue_watcher:
 			proc.start()
 		server.serve_forever()
 
