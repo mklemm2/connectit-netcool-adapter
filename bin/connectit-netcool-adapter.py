@@ -92,7 +92,8 @@ class ConnectitDaemon(Daemon):
 			stream_handler = logging.StreamHandler()
 			stream_handler.setLevel(debuglevel)
 			debug_formatter = logging.Formatter(
-				"[%(levelname)s] %(message)s")
+				"%(asctime)s [%(levelname)s] %(message)s",
+				"%Y-%m-%d %H:%M:%S")
 			stream_handler.setFormatter(debug_formatter)
 			logger.setLevel(debuglevel)
 
